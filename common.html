@@ -13118,12 +13118,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">@brief : </span>
-<span class="sd">@note  : </span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="c1">#!/usr/bin/python3</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="ch">#!/usr/bin/python3</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -13135,16 +13130,18 @@ div#notebook {
 <span class="sd">    @brief : Pythonでよく使用する関数を集めたクラス</span>
 <span class="sd">    @note  : </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
+    <span class="n">line_notify_token</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">discord_webhook_url</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">discord_username</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">slack_webhook_url</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">slack_username</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">key_dict</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">get_csv_val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        @brief : ファイル名と行列を指定してCSVの値を取得</span>
-<span class="sd">        @note  : CSVファイルの1行目はカラム名データとなるため、</span>
-<span class="sd">                2行目からのデータが取得可能なことに注意</span>
+<span class="sd">        @note  : CSVファイルの1行目はカラム名データとなるため、2行目からのデータが取得可能なことに注意</span>
 <span class="sd">        &quot;&quot;&quot;</span>        
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
             <span class="n">csv_input</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
@@ -13155,54 +13152,60 @@ div#notebook {
     <span class="k">def</span> <span class="nf">get_csv_val_by_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        @brief : ファイル名とkeyを指定してCSVの値を取得</span>
-<span class="sd">        @note  : </span>
+<span class="sd">        @note  : ファイルに格納されているデータは下記のような形式</span>
+<span class="sd">                  name1, key1</span>
+<span class="sd">                  name2, key2</span>
+<span class="sd">                  ・</span>
+<span class="sd">                  ・</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">key_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">key_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">key_dict</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">key_dict</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
                 <span class="c1">#print(key_dict)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">key_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">set_line_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>        
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        @brief : ライントークンをセット</span>
-<span class="sd">        @note  : ①set_line_token ②line_notify の順に実行</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="c1"># ----- LINE, DISCORD, SLACK にメッセージを送るための初期設定 関連----</span>
+    <span class="k">def</span> <span class="nf">set_line</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line_notify_token</span> <span class="o">=</span> <span class="n">token</span>
 
-    <span class="k">def</span> <span class="nf">line_notify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        @brief : ラインにメッセージを送信</span>
-<span class="sd">        @note  : ①set_line_token ②line_notify の順に実行</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
-        <span class="n">line_notify_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span>
-        <span class="n">line_notify_api</span> <span class="o">=</span> <span class="s2">&quot;https://notify-api.line.me/api/notify&quot;</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">}</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer &quot;</span> <span class="o">+</span> <span class="n">line_notify_token</span><span class="p">}</span> 
-        <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">line_notify_api</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-</pre></div>
+    <span class="k">def</span> <span class="nf">set_discord</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">discord_webhook_url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">discord_username</span> <span class="o">=</span> <span class="n">username</span>
+    
+    <span class="k">def</span> <span class="nf">set_slack</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slack_webhook_url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slack_username</span> <span class="o">=</span> <span class="n">username</span>        
 
-    </div>
-</div>
-</div>
+    <span class="c1"># ----- Notify（メッセージを送る） 関連-----</span>
+    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">__line</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">__discord</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">__slack</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        
+    <span class="k">def</span> <span class="nf">__line</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_notify_token</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;https://notify-api.line.me/api/notify&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_notify_token</span><span class="p">},</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">message</span><span class="p">})</span>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Debug用で作成</span>
-<span class="c1">#file_name = &quot;../keys.csv&quot;</span>
-<span class="c1">#common = Common()</span>
-<span class="c1">#key = common.get_csv_val_by_key(file_name, &quot;key1&quot;)</span>
-<span class="c1">#print(key)</span>
-<span class="c1">#common = Common()</span>
-<span class="c1">#token = common.get_csv_val(file_name, 0, 1)</span>
-<span class="c1">#common.set_line_token(token)</span>
-<span class="c1">#common.line_notify(&quot;test&quot;)</span>
+    <span class="k">def</span> <span class="nf">__discord</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">discord_webhook_url</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">discord_webhook_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">discord_username</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="n">message</span><span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">__slack</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slack_webhook_url</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slack_webhook_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">slack_username</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span><span class="n">message</span><span class="p">}))</span>
+
+    
 </pre></div>
 
     </div>

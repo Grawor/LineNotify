@@ -4,11 +4,6 @@
 # In[1]:
 
 
-"""
-@brief : 
-@note  : 
-"""
-
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import os
@@ -21,16 +16,18 @@ class Common():
     @brief : Pythonでよく使用する関数を集めたクラス
     @note  : 
     """
-
+    line_notify_token = ''
+    discord_webhook_url = ''
+    discord_username = ''
+    slack_webhook_url = ''
+    slack_username = ''
+    
     def __init__(self):
-        self.token = ''
-        self.key_dict = {}
 
     def get_csv_val(self, file_name, row, col):
         """
         @brief : ファイル名と行列を指定してCSVの値を取得
-        @note  : CSVファイルの1行目はカラム名データとなるため、
-                2行目からのデータが取得可能なことに注意
+        @note  : CSVファイルの1行目はカラム名データとなるため、2行目からのデータが取得可能なことに注意
         """        
         if os.path.exists(file_name):
             csv_input = pd.read_csv(file_name)
@@ -41,45 +38,58 @@ class Common():
     def get_csv_val_by_key(self, file_name, key):
         """
         @brief : ファイル名とkeyを指定してCSVの値を取得
-        @note  : 
+        @note  : ファイルに格納されているデータは下記のような形式
+                  name1, key1
+                  name2, key2
+                  ・
+                  ・
         """
-        self.key_dict = {}
+        key_dict = {}
         with open(file_name, "r") as f:
             reader = csv.reader(f)
             for row in reader:
-                self.key_dict[row[0]] = row[1]
+                key_dict[row[0]] = row[1]
                 #print(key_dict)
-        return self.key_dict[key]
+        return key_dict[key]
 
-    def set_line_token(self, token):        
-        """
-        @brief : ライントークンをセット
-        @note  : ①set_line_token ②line_notify の順に実行
-        """
-        self.token = token
+    # ----- LINE, DISCORD, SLACK にメッセージを送るための初期設定 関連----
+    def set_line(token):
+        self.line_notify_token = token
 
-    def line_notify(self, message):
-        """
-        @brief : ラインにメッセージを送信
-        @note  : ①set_line_token ②line_notify の順に実行
-        """        
-        line_notify_token = self.token
-        line_notify_api = "https://notify-api.line.me/api/notify"
-        payload = {"message": message}
-        headers = {"Authorization": "Bearer " + line_notify_token} 
-        requests.post(line_notify_api, data=payload, headers=headers)
+    def set_discord(url, username)
+        self.discord_webhook_url = url
+        self.discord_username = username
+    
+    def set_slack(url, username)
+        self.slack_webhook_url = url
+        self.slack_username = username        
 
+    # ----- Notify（メッセージを送る） 関連-----
+    def send_message(text) :
+        try:
+            __line(text)
+        except:
+            pass
+        try:
+            __discord(text)
+        except:
+            pass
+        try:
+            __slack(text)
+        except:
+            pass
+        
+    def __line(message):
+        if len(self.line_notify_token) > 0:
+            requests.post('https://notify-api.line.me/api/notify', headers={'Authorization': 'Bearer ' + self.line_notify_token}, data={'message': '\n' + message})
 
-# In[2]:
+    def __discord(message):
+        if len(self.discord_webhook_url) > 0:
+            requests.post(self.discord_webhook_url, data={'username': self.discord_username, 'content': message})
 
+    def __slack(message):
+        if len(self.slack_webhook_url) > 0:
+            requests.post(self.slack_webhook_url, data=json.dumps({'username': self.slack_username, 'text':message}))
 
-# Debug用で作成
-#file_name = "../keys.csv"
-#common = Common()
-#key = common.get_csv_val_by_key(file_name, "key1")
-#print(key)
-#common = Common()
-#token = common.get_csv_val(file_name, 0, 1)
-#common.set_line_token(token)
-#common.line_notify("test")
+    
 
