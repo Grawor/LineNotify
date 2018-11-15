@@ -17,28 +17,32 @@ import csv
 import pandas as pd
 
 class Common():
+    """
+    @brief : Pythonでよく使用する関数を集めたクラス
+    @note  : 
+    """
 
     def __init__(self):
         self.token = ''
         self.key_dict = {}
 
-    """
-    @brief : ファイル名と行列を指定してCSVの値を取得
-    @note  : CSVファイルの1行目はカラム名データとなるため、
-             2行目からのデータが取得可能なことに注意
-    """        
     def get_csv_val(self, file_name, row, col):
+        """
+        @brief : ファイル名と行列を指定してCSVの値を取得
+        @note  : CSVファイルの1行目はカラム名データとなるため、
+                2行目からのデータが取得可能なことに注意
+        """        
         if os.path.exists(file_name):
             csv_input = pd.read_csv(file_name)
             return csv_input.values[row, col]
         else:
             print(file_name + " が存在しません。")
  
-    """
-    @brief : ファイル名とkeyを指定してCSVの値を取得
-    @note  : 
-    """
     def get_csv_val_by_key(self, file_name, key):
+        """
+        @brief : ファイル名とkeyを指定してCSVの値を取得
+        @note  : 
+        """
         self.key_dict = {}
         with open(file_name, "r") as f:
             reader = csv.reader(f)
@@ -47,19 +51,18 @@ class Common():
                 #print(key_dict)
         return self.key_dict[key]
 
-        
-    """
-    @brief : ライントークンをセット
-    @note  : ①set_line_token ②line_notify の順に実行
-    """
     def set_line_token(self, token):        
+        """
+        @brief : ライントークンをセット
+        @note  : ①set_line_token ②line_notify の順に実行
+        """
         self.token = token
 
-    """
-    @brief : ラインにメッセージを送信
-    @note  : ①set_line_token ②line_notify の順に実行
-    """        
     def line_notify(self, message):
+        """
+        @brief : ラインにメッセージを送信
+        @note  : ①set_line_token ②line_notify の順に実行
+        """        
         line_notify_token = self.token
         line_notify_api = "https://notify-api.line.me/api/notify"
         payload = {"message": message}

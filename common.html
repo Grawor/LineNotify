@@ -13131,28 +13131,32 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="k">class</span> <span class="nc">Common</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    @brief : Pythonでよく使用する関数を集めたクラス</span>
+<span class="sd">    @note  : </span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key_dict</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    @brief : ファイル名と行列を指定してCSVの値を取得</span>
-<span class="sd">    @note  : CSVファイルの1行目はカラム名データとなるため、</span>
-<span class="sd">             2行目からのデータが取得可能なことに注意</span>
-<span class="sd">    &quot;&quot;&quot;</span>        
     <span class="k">def</span> <span class="nf">get_csv_val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @brief : ファイル名と行列を指定してCSVの値を取得</span>
+<span class="sd">        @note  : CSVファイルの1行目はカラム名データとなるため、</span>
+<span class="sd">                2行目からのデータが取得可能なことに注意</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
             <span class="n">csv_input</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">csv_input</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">file_name</span> <span class="o">+</span> <span class="s2">&quot; が存在しません。&quot;</span><span class="p">)</span>
  
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    @brief : ファイル名とkeyを指定してCSVの値を取得</span>
-<span class="sd">    @note  : </span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">get_csv_val_by_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @brief : ファイル名とkeyを指定してCSVの値を取得</span>
+<span class="sd">        @note  : </span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -13161,19 +13165,18 @@ div#notebook {
                 <span class="c1">#print(key_dict)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
-        
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    @brief : ライントークンをセット</span>
-<span class="sd">    @note  : ①set_line_token ②line_notify の順に実行</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">set_line_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @brief : ライントークンをセット</span>
+<span class="sd">        @note  : ①set_line_token ②line_notify の順に実行</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">token</span>
 
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    @brief : ラインにメッセージを送信</span>
-<span class="sd">    @note  : ①set_line_token ②line_notify の順に実行</span>
-<span class="sd">    &quot;&quot;&quot;</span>        
     <span class="k">def</span> <span class="nf">line_notify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @brief : ラインにメッセージを送信</span>
+<span class="sd">        @note  : ①set_line_token ②line_notify の順に実行</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
         <span class="n">line_notify_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span>
         <span class="n">line_notify_api</span> <span class="o">=</span> <span class="s2">&quot;https://notify-api.line.me/api/notify&quot;</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">message</span><span class="p">}</span>
