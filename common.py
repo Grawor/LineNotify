@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[3]:
 
 
 #!/usr/bin/python3
@@ -23,11 +23,13 @@ class Common():
     slack_username = ''
     
     def __init__(self):
+        print("Commonクラスをインスタンス化")
 
     def get_csv_val(self, file_name, row, col):
         """
         @brief : ファイル名と行列を指定してCSVの値を取得
         @note  : CSVファイルの1行目はカラム名データとなるため、2行目からのデータが取得可能なことに注意
+                  始め（2行目）のデータ→(行:0,列:0)
         """        
         if os.path.exists(file_name):
             csv_input = pd.read_csv(file_name)
@@ -56,11 +58,11 @@ class Common():
     def set_line(token):
         self.line_notify_token = token
 
-    def set_discord(url, username)
+    def set_discord(url, username):
         self.discord_webhook_url = url
         self.discord_username = username
     
-    def set_slack(url, username)
+    def set_slack(url, username):
         self.slack_webhook_url = url
         self.slack_username = username        
 
@@ -92,4 +94,12 @@ class Common():
             requests.post(self.slack_webhook_url, data=json.dumps({'username': self.slack_username, 'text':message}))
 
     
+
+
+# In[12]:
+
+
+#common = Common()
+#key = common.get_csv_val("../keys.csv", 1,1)
+#print(key)
 

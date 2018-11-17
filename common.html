@@ -13115,7 +13115,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="ch">#!/usr/bin/python3</span>
@@ -13137,11 +13137,13 @@ div#notebook {
     <span class="n">slack_username</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Commonクラスをインスタンス化&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_csv_val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        @brief : ファイル名と行列を指定してCSVの値を取得</span>
 <span class="sd">        @note  : CSVファイルの1行目はカラム名データとなるため、2行目からのデータが取得可能なことに注意</span>
+<span class="sd">                  始め（2行目）のデータ→(行:0,列:0)</span>
 <span class="sd">        &quot;&quot;&quot;</span>        
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
             <span class="n">csv_input</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
@@ -13170,11 +13172,11 @@ div#notebook {
     <span class="k">def</span> <span class="nf">set_line</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_notify_token</span> <span class="o">=</span> <span class="n">token</span>
 
-    <span class="k">def</span> <span class="nf">set_discord</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">set_discord</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">discord_webhook_url</span> <span class="o">=</span> <span class="n">url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">discord_username</span> <span class="o">=</span> <span class="n">username</span>
     
-    <span class="k">def</span> <span class="nf">set_slack</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">set_slack</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">slack_webhook_url</span> <span class="o">=</span> <span class="n">url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">slack_username</span> <span class="o">=</span> <span class="n">username</span>        
 
@@ -13209,6 +13211,40 @@ div#notebook {
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#common = Common()</span>
+<span class="c1">#key = common.get_csv_val(&quot;../keys.csv&quot;, 1,1)</span>
+<span class="c1">#print(key)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Commonクラスをインスタンス化
+vudXUtUX-hAf3SoPMTJjtMWhYINrHxpE6VVsVGlwA_U5KIjO
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
